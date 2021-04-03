@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/dionsaputra/fp-snake/deques"
 	"github.com/dionsaputra/fp-snake/geometry"
 	"github.com/dionsaputra/fp-snake/snakes"
 	"os"
@@ -9,13 +10,8 @@ import (
 )
 
 func main() {
-	s := snakes.SnakeOf(geometry.PointOf(10, 10))
-	s.Tail().PushBack(geometry.PointOf(10, 11))
-	s.Tail().PushBack(geometry.PointOf(10, 12))
-
-	//fmt.Printf("%v\n", reflect.TypeOf(s.Tail()))
-	//println(s.Tail().Size())
-	//os.Exit(1)
+	s := snakes.SnakeOf(geometry.PointOf(10, 10)).
+		WithTail(deques.DequeOf(geometry.PointOf(10, 11), geometry.PointOf(10, 12)))
 
 	width := 30
 	height := 15
@@ -27,7 +23,6 @@ func main() {
 		for i := 0; i < height; i++ {
 			for j := 0; j < width; j++ {
 				contains := s.Contains(geometry.PointOf(j, i))
-				//fmt.Println(i, j, contains)
 				if contains {
 					print("#")
 				} else {
