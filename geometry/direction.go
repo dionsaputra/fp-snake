@@ -5,6 +5,10 @@ type Direction struct {
 	dy int
 }
 
+func DirectionOf(dx, dy int) Direction {
+	return Direction{dx, dy}
+}
+
 func Left() Direction {
 	return Direction{-1, 0}
 }

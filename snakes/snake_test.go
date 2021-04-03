@@ -41,8 +41,7 @@ func TestSnake_Move(t *testing.T) {
 		tail *deques.Deque
 	}
 	type args struct {
-		dx int
-		dy int
+		direction geometry.Direction
 	}
 	tests := []struct {
 		name   string
@@ -57,8 +56,7 @@ func TestSnake_Move(t *testing.T) {
 				tail: deques.DequeOf(),
 			},
 			args: args{
-				dx: 1,
-				dy: 0,
+				direction: geometry.DirectionOf(1, 0),
 			},
 			want: SnakeOf(geometry.PointOf(3, 3)),
 		},
@@ -69,8 +67,7 @@ func TestSnake_Move(t *testing.T) {
 				tail: deques.DequeOf(geometry.PointOf(2, 4), geometry.PointOf(2, 5)),
 			},
 			args: args{
-				dx: 1,
-				dy: 0,
+				direction: geometry.DirectionOf(1, 0),
 			},
 			want: &Snake{
 				head: geometry.PointOf(3, 3),
@@ -84,7 +81,7 @@ func TestSnake_Move(t *testing.T) {
 				head: tt.fields.head,
 				tail: tt.fields.tail,
 			}
-			got := s.Move(tt.args.dx, tt.args.dy)
+			got := s.Move(tt.args.direction)
 			assert.Equal(t, tt.want, got)
 		})
 	}

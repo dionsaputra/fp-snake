@@ -21,10 +21,6 @@ func (s *Snake) Tail() *deques.Deque {
 	return s.tail
 }
 
-func (s *Snake) hasTail() bool {
-	return !s.tail.IsEmpty()
-}
-
 func (s *Snake) mapIf(condition bool, transform func(snake *Snake) *Snake) *Snake {
 	if condition {
 		return transform(s)
@@ -32,11 +28,36 @@ func (s *Snake) mapIf(condition bool, transform func(snake *Snake) *Snake) *Snak
 	return s
 }
 
+func (s *Snake) mapIfHasTail(transform func(snake *Snake) *Snake) *Snake {
+	if !s.tail.IsEmpty() {
+		return transform(s)
+	}
+	return s
+}
+
 func (s *Snake) Move(direction geometry.Direction) *Snake {
-	return SnakeOf(s.head.Translate(direction)).mapIf(s.hasTail(), func(snake *Snake) *Snake {
+	return SnakeOf(s.head.Translate(direction)).mapIf(!s.tail.IsEmpty(), func(snake *Snake) *Snake {
 		snake.tail = s.tail.PushFront(s.head).PopBack()
 		return snake
 	})
+}
+
+func (s *Snake) Eat() *Snake {
+	return SnakeOf(s.head.Translate(geometry.Up())).mapIf(!s.tail.IsEmpty(), func(snake *Snake) *Snake {
+		snake.tail = s.tail.PushFront(s.head)
+		return snake
+	})
+}
+
+func (s *Snake) direction() geometry.Direction {
+	return s.head.GetDirection(s.firstTail())
+}
+
+func (s *Snake) firstTail() geometry.Point {
+	if s.tail.First() != nil {
+		return s.tail.First().(geometry.Point)
+	}
+	return s.head
 }
 
 func (s *Snake) Contains(point geometry.Point) bool {

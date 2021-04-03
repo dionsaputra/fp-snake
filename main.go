@@ -26,7 +26,7 @@ func main() {
 
 		for i := 0; i < height; i++ {
 			for j := 0; j < width; j++ {
-				contains := s.Contains(geometry.PointOf(j,i))
+				contains := s.Contains(geometry.PointOf(j, i))
 				//fmt.Println(i, j, contains)
 				if contains {
 					print("#")
@@ -37,7 +37,7 @@ func main() {
 			}
 			print("\n")
 		}
-		s = s.Move(geometry.Left())
+		s = s.Eat()
 		time.Sleep(300 * 1000 * 1000)
 	}
 }

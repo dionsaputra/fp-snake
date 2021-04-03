@@ -53,3 +53,10 @@ func (d *Deque) Contains(predicate func(element interface{}) bool) bool {
 		return predicate(d.elements[index])
 	})
 }
+
+func (d *Deque) First() interface{} {
+	if d.IsEmpty() {
+		return nil
+	}
+	return d.elements[0]
+}
