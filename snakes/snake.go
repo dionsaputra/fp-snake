@@ -2,15 +2,15 @@ package snakes
 
 import (
 	"github.com/dionsaputra/fp-snake/deques"
-	"github.com/dionsaputra/fp-snake/points"
+	"github.com/dionsaputra/fp-snake/geometry"
 )
 
 type Snake struct {
-	head points.Point
+	head geometry.Point
 	tail *deques.Deque
 }
 
-func SnakeOf(head points.Point) *Snake {
+func SnakeOf(head geometry.Point) *Snake {
 	return &Snake{
 		head: head,
 		tail: deques.DequeOf(),
@@ -19,11 +19,6 @@ func SnakeOf(head points.Point) *Snake {
 
 func (s *Snake) Tail() *deques.Deque {
 	return s.tail
-}
-
-func (s *Snake) WithTail(points ...points.Point) *Snake {
-	s.tail = deques.DequeOf(points)
-	return s
 }
 
 func (s *Snake) hasTail() bool {
@@ -37,18 +32,14 @@ func (s *Snake) mapIf(condition bool, transform func(snake *Snake) *Snake) *Snak
 	return s
 }
 
-func (s *Snake) Move(dx, dy int) *Snake {
-	return SnakeOf(s.head.Translate(dx, dy)).mapIf(s.hasTail(), s.followHead())
-}
-
-func (s *Snake) followHead() func(*Snake) *Snake {
-	return func(snake *Snake) *Snake {
+func (s *Snake) Move(direction geometry.Direction) *Snake {
+	return SnakeOf(s.head.Translate(direction)).mapIf(s.hasTail(), func(snake *Snake) *Snake {
 		snake.tail = s.tail.PushFront(s.head).PopBack()
 		return snake
-	}
+	})
 }
 
-func (s *Snake) Contains(point points.Point) bool {
+func (s *Snake) Contains(point geometry.Point) bool {
 	return s.head == point || s.tail.Contains(func(element interface{}) bool {
 		return element == point
 	})

@@ -1,11 +1,11 @@
-package ranges
+package fp
 
 type Range struct {
 	start int
 	end   int
 }
 
-func NewRange(args ...int) Range {
+func RangeOf(args ...int) Range {
 	if len(args) == 0 {
 		return Range{0, 0}
 	}

@@ -1,8 +1,7 @@
 package deques
 
 import (
-	"github.com/dionsaputra/fp-snake/ranges"
-	"github.com/dionsaputra/fp-snake/routines"
+	"github.com/dionsaputra/fp-snake/fp"
 )
 
 type Deque struct {
@@ -11,7 +10,7 @@ type Deque struct {
 
 func DequeOf(elements ...interface{}) *Deque {
 	d := Deque{}
-	ranges.NewRange(len(elements)).Forward(func(index int) {
+	fp.RangeOf(len(elements)).Forward(func(index int) {
 		d.PushBack(elements[index])
 	})
 	return &d
@@ -36,29 +35,21 @@ func (d *Deque) PushBack(element interface{}) *Deque {
 }
 
 func (d *Deque) PopFront() *Deque {
-	routines.DoIf(!d.IsEmpty(), d.doPopFront())
-	return d
-}
-
-func (d *Deque) doPopFront() func() {
-	return func() {
+	fp.DoIf(!d.IsEmpty(), func() {
 		d.elements = d.elements[1:]
-	}
+	})
+	return d
 }
 
 func (d *Deque) PopBack() *Deque {
-	routines.DoIf(!d.IsEmpty(), d.doPopBack())
+	fp.DoIf(!d.IsEmpty(), func() {
+		d.elements = d.elements[:d.Size()-1]
+	})
 	return d
 }
 
-func (d *Deque) doPopBack() func() {
-	return func() {
-		d.elements = d.elements[:d.Size()-1]
-	}
-}
-
 func (d *Deque) Contains(predicate func(element interface{}) bool) bool {
-	return ranges.NewRange(d.Size()).Contains(func(index int) bool {
+	return fp.RangeOf(d.Size()).Contains(func(index int) bool {
 		return predicate(d.elements[index])
 	})
 }

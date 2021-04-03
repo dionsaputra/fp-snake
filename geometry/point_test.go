@@ -1,4 +1,4 @@
-package points
+package geometry
 
 import (
 	"reflect"
@@ -42,8 +42,7 @@ func TestPoint_Translate(t *testing.T) {
 		y int
 	}
 	type args struct {
-		dx int
-		dy int
+		direction Direction
 	}
 	tests := []struct {
 		name   string
@@ -58,8 +57,7 @@ func TestPoint_Translate(t *testing.T) {
 				y: 3,
 			},
 			args: args{
-				dx: 1,
-				dy: 2,
+				direction: Direction{1,2},
 			},
 			want: PointOf(3, 5),
 		},
@@ -70,7 +68,7 @@ func TestPoint_Translate(t *testing.T) {
 				x: tt.fields.x,
 				y: tt.fields.y,
 			}
-			if got := p.Translate(tt.args.dx, tt.args.dy); !reflect.DeepEqual(got, tt.want) {
+			if got := p.Translate(tt.args.direction); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Translate() = %v, want %v", got, tt.want)
 			}
 		})

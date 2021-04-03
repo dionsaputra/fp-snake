@@ -1,4 +1,4 @@
-package ranges
+package fp
 
 import (
 	"reflect"
@@ -16,30 +16,30 @@ func TestRangeOf(t *testing.T) {
 		want Range
 	}{
 		{
-			name: "when empty args got ranges 0 to 0",
+			name: "when empty args got fp 0 to 0",
 			args: args{args: []int{}},
 			want: Range{0, 0},
 		},
 		{
-			name: "when args size is 1 got ranges 0 to args[0]",
+			name: "when args size is 1 got fp 0 to args[0]",
 			args: args{args: []int{5}},
 			want: Range{0, 5},
 		},
 		{
-			name: "when args size is 2 got ranges args[0] to args[1]",
+			name: "when args size is 2 got fp args[0] to args[1]",
 			args: args{args: []int{2, 5}},
 			want: Range{2, 5},
 		},
 		{
-			name: "when args size is more than 2 got ranges args[0] to args[1]",
+			name: "when args size is more than 2 got fp args[0] to args[1]",
 			args: args{args: []int{2, 5, 7}},
 			want: Range{2, 5},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := NewRange(tt.args.args...); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("NewRange() = %v, want %v", got, tt.want)
+			if got := RangeOf(tt.args.args...); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("RangeOf() = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -92,7 +92,7 @@ func TestRange_ReduceToString(t *testing.T) {
 		want   string
 	}{
 		{
-			name:   "reduce ranges 1 to 5 got 1234",
+			name:   "reduce fp 1 to 5 got 1234",
 			fields: fields{1, 5},
 			args: args{
 				action: func(index int) string {
@@ -131,7 +131,7 @@ func TestRange_JoinToString(t *testing.T) {
 		want   string
 	}{
 		{
-			name:   "join ranges 1 to 5 separator comma got 1,2,3,4",
+			name:   "join fp 1 to 5 separator comma got 1,2,3,4",
 			fields: fields{1, 5},
 			args: args{
 				separator: ",",

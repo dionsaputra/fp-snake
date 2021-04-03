@@ -2,7 +2,7 @@ package snakes
 
 import (
 	"github.com/dionsaputra/fp-snake/deques"
-	"github.com/dionsaputra/fp-snake/points"
+	"github.com/dionsaputra/fp-snake/geometry"
 	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
@@ -10,7 +10,7 @@ import (
 
 func TestNewSnake(t *testing.T) {
 	type args struct {
-		head points.Point
+		head geometry.Point
 	}
 	tests := []struct {
 		name string
@@ -19,9 +19,9 @@ func TestNewSnake(t *testing.T) {
 	}{
 		{
 			name: "SnakeOf",
-			args: args{head: points.PointOf(1, 2)},
+			args: args{head: geometry.PointOf(1, 2)},
 			want: &Snake{
-				head: points.PointOf(1, 2),
+				head: geometry.PointOf(1, 2),
 				tail: deques.DequeOf(),
 			},
 		},
@@ -37,7 +37,7 @@ func TestNewSnake(t *testing.T) {
 
 func TestSnake_Move(t *testing.T) {
 	type fields struct {
-		head points.Point
+		head geometry.Point
 		tail *deques.Deque
 	}
 	type args struct {
@@ -53,28 +53,28 @@ func TestSnake_Move(t *testing.T) {
 		{
 			name: "just head",
 			fields: fields{
-				head: points.PointOf(2, 3),
+				head: geometry.PointOf(2, 3),
 				tail: deques.DequeOf(),
 			},
 			args: args{
 				dx: 1,
 				dy: 0,
 			},
-			want: SnakeOf(points.PointOf(3, 3)),
+			want: SnakeOf(geometry.PointOf(3, 3)),
 		},
 		{
 			name: "with tail",
 			fields: fields{
-				head: points.PointOf(2, 3),
-				tail: deques.DequeOf(points.PointOf(2, 4), points.PointOf(2, 5)),
+				head: geometry.PointOf(2, 3),
+				tail: deques.DequeOf(geometry.PointOf(2, 4), geometry.PointOf(2, 5)),
 			},
 			args: args{
 				dx: 1,
 				dy: 0,
 			},
 			want: &Snake{
-				head: points.PointOf(3, 3),
-				tail: deques.DequeOf(points.PointOf(2, 3), points.PointOf(2, 4)),
+				head: geometry.PointOf(3, 3),
+				tail: deques.DequeOf(geometry.PointOf(2, 3), geometry.PointOf(2, 4)),
 			},
 		},
 	}
@@ -92,11 +92,11 @@ func TestSnake_Move(t *testing.T) {
 
 func TestSnake_Contains(t *testing.T) {
 	type fields struct {
-		head points.Point
+		head geometry.Point
 		tail *deques.Deque
 	}
 	type args struct {
-		point points.Point
+		point geometry.Point
 	}
 	tests := []struct {
 		name   string
@@ -107,28 +107,28 @@ func TestSnake_Contains(t *testing.T) {
 		{
 			name: "contains in head",
 			fields: fields{
-				head: points.PointOf(3, 4),
-				tail: deques.DequeOf(points.PointOf(3, 5), points.PointOf(3, 6)),
+				head: geometry.PointOf(3, 4),
+				tail: deques.DequeOf(geometry.PointOf(3, 5), geometry.PointOf(3, 6)),
 			},
-			args: args{point: points.PointOf(3, 4)},
+			args: args{point: geometry.PointOf(3, 4)},
 			want: true,
 		},
 		{
 			name: "contains in tail",
 			fields: fields{
-				head: points.PointOf(3, 4),
-				tail: deques.DequeOf(points.PointOf(3, 5), points.PointOf(3, 6)),
+				head: geometry.PointOf(3, 4),
+				tail: deques.DequeOf(geometry.PointOf(3, 5), geometry.PointOf(3, 6)),
 			},
-			args: args{point: points.PointOf(3, 6)},
+			args: args{point: geometry.PointOf(3, 6)},
 			want: true,
 		},
 		{
 			name: "not contains",
 			fields: fields{
-				head: points.PointOf(3, 4),
-				tail: deques.DequeOf(points.PointOf(3, 5), points.PointOf(3, 6)),
+				head: geometry.PointOf(3, 4),
+				tail: deques.DequeOf(geometry.PointOf(3, 5), geometry.PointOf(3, 6)),
 			},
-			args: args{point: points.PointOf(3, 7)},
+			args: args{point: geometry.PointOf(3, 7)},
 			want: false,
 		},
 	}
