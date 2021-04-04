@@ -1,28 +1,27 @@
 package main
 
 import (
-	"github.com/dionsaputra/fp-snake/deques"
-	"github.com/dionsaputra/fp-snake/geometry"
-	"github.com/dionsaputra/fp-snake/snakes"
+	"github.com/dionsaputra/fp-snake/logics"
 	"os"
 	"os/exec"
 	"time"
 )
 
 func main() {
-	s := snakes.SnakeOf(geometry.PointOf(10, 10)).
-		WithTail(deques.DequeOf(geometry.PointOf(10, 11), geometry.PointOf(10, 12)))
+	s := logics.NewSnake(logics.NewSegment(5, 5)).
+		Grow(logics.NewDirection(1, 0), logics.NewDimension(30, 15)).
+		Grow(logics.NewDirection(1, 0), logics.NewDimension(30, 15))
 
 	width := 30
 	height := 15
-	for t := 0; t < 10; t++ {
+	for t := 0; t < 100; t++ {
 		cmd := exec.Command("clear") //Linux example, its tested
 		cmd.Stdout = os.Stdout
 		_ = cmd.Run()
 
 		for i := 0; i < height; i++ {
 			for j := 0; j < width; j++ {
-				contains := s.Contains(geometry.PointOf(j, i))
+				contains := s.Contains(logics.NewSegment(j, i))
 				if contains {
 					print("#")
 				} else {
@@ -32,7 +31,7 @@ func main() {
 			}
 			print("\n")
 		}
-		s = s.Eat()
+		s = s.Move(logics.NewDirection(1, 0), logics.NewDimension(30, 15))
 		time.Sleep(300 * 1000 * 1000)
 	}
 }

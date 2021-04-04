@@ -5,7 +5,7 @@ type Range struct {
 	end   int
 }
 
-func RangeOf(args ...int) Range {
+func RangeOfou(args ...int) Range {
 	if len(args) == 0 {
 		return Range{0, 0}
 	}
