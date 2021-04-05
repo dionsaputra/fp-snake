@@ -219,35 +219,6 @@ func TestSegment_Move(t *testing.T) {
 	}
 }
 
-func TestNewHead(t *testing.T) {
-	type args struct {
-		segment   Segment
-		direction math.Direction
-	}
-	tests := []struct {
-		name string
-		args args
-		want Head
-	}{
-		{
-			name: "new Head",
-			args: args{
-				segment:   Segment{10, 20},
-				direction: math.Left(),
-			},
-			want: Head{
-				Segment:   Segment{10, 20},
-				Direction: math.Left(),
-			},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.want, Head{tt.args.segment, tt.args.direction})
-		})
-	}
-}
-
 func TestHead_SetDirection(t *testing.T) {
 	type fields struct {
 		segment   Segment
@@ -317,33 +288,6 @@ func TestHead_Move(t *testing.T) {
 				Direction: tt.fields.direction,
 			}
 			assert.Equal(t, tt.want, h.Move(tt.args.dimension))
-		})
-	}
-}
-
-func TestNewTail(t *testing.T) {
-	type args struct {
-		segments []Segment
-	}
-	tests := []struct {
-		name string
-		args args
-		want Tail
-	}{
-		{
-			name: "empty arguments",
-			args: args{},
-			want: Tail{},
-		},
-		{
-			name: "non-empty arguments",
-			args: args{[]Segment{{10, 20}, {20, 30}}},
-			want: Tail{[]Segment{{10, 20}, {20, 30}}},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.want, Tail{tt.args.segments})
 		})
 	}
 }
