@@ -1,9 +1,16 @@
-package geometry
+package math
 
-type Direction struct {
-	Vertical   int
-	Horizontal int
-}
+type (
+	Dimension struct {
+		Height int
+		Width  int
+	}
+
+	Direction struct {
+		Vertical   int
+		Horizontal int
+	}
+)
 
 func Left() Direction {
 	return Direction{0, -1}

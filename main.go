@@ -1,20 +1,21 @@
 package main
 
 import (
-	"github.com/dionsaputra/fp-snake/logic/geometry"
-	"github.com/dionsaputra/fp-snake/logic/snake"
+	"github.com/dionsaputra/fp-snake/math"
+	"github.com/dionsaputra/fp-snake/snake"
 	"os"
 	"os/exec"
 	"time"
 )
 
 func main() {
-	dimension := geometry.NewDimension(15, 30)
-	right := geometry.Right()
+	dimension := math.Dimension{Height: 15, Width: 30}
+	right := math.Right()
 
-	s := snake.NewSnake(snake.NewHead(snake.NewSegment(5, 5), right)).
-		Grow(dimension).
-		Grow(dimension)
+	s := snake.NewSnake(snake.Head{
+		Segment:   snake.Segment{Row: 5, Col: 5},
+		Direction: right,
+	}).Grow(dimension).Grow(dimension)
 
 	width := 30
 	height := 15
@@ -25,7 +26,7 @@ func main() {
 
 		for i := 0; i < height; i++ {
 			for j := 0; j < width; j++ {
-				contains := s.Contains(snake.NewSegment(i, j))
+				contains := s.Contains(snake.Segment{Row: i, Col: j})
 				if contains {
 					print("#")
 				} else {
