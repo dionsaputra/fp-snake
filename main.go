@@ -8,9 +8,12 @@ import (
 )
 
 func main() {
+	dimension := logics.NewDimension(30, 15)
+	right := logics.NewDirection(1, 0)
+
 	s := logics.NewSnake(logics.NewSegment(5, 5)).
-		Grow(logics.NewDirection(1, 0), logics.NewDimension(30, 15)).
-		Grow(logics.NewDirection(1, 0), logics.NewDimension(30, 15))
+		Grow(right, dimension).
+		Grow(right, dimension)
 
 	width := 30
 	height := 15
@@ -31,7 +34,7 @@ func main() {
 			}
 			print("\n")
 		}
-		s = s.Move(logics.NewDirection(1, 0), logics.NewDimension(30, 15))
+		s = s.Move(right, dimension)
 		time.Sleep(300 * 1000 * 1000)
 	}
 }
