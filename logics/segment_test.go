@@ -46,19 +46,19 @@ func TestSegment_Move(t *testing.T) {
 		{
 			name:   "in dimension range",
 			fields: fields{10, 12},
-			args:   args{NewDirection(-1, 1), NewDimension(20, 30)},
-			want:   NewSegment(9, 13),
+			args:   args{Left(), NewDimension(20, 30)},
+			want:   NewSegment(10, 11),
 		},
 		{
 			name:   "out of height dimension",
 			fields: fields{19, 12},
-			args:   args{NewDirection(1, 0), NewDimension(20, 30)},
+			args:   args{Down(), NewDimension(20, 30)},
 			want:   NewSegment(0, 12),
 		},
 		{
 			name:   "out of width dimension",
 			fields: fields{19, 29},
-			args:   args{NewDirection(0, 1), NewDimension(20, 30)},
+			args:   args{Right(), NewDimension(20, 30)},
 			want:   NewSegment(19, 0),
 		},
 	}

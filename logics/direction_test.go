@@ -5,25 +5,46 @@ import (
 	"testing"
 )
 
-func TestNewDirection(t *testing.T) {
+func TestDirection_IsOpposite(t *testing.T) {
+	type fields struct {
+		vertical   int
+		horizontal int
+	}
 	type args struct {
-		deltaRow int
-		deltaCol int
+		direction Direction
 	}
 	tests := []struct {
-		name string
-		args args
-		want Direction
+		name   string
+		fields fields
+		args   args
+		want   bool
 	}{
 		{
-			name: "new direction",
-			args: args{1, 0},
-			want: Direction{1, 0},
+			name: "opposite",
+			fields: fields{
+				vertical:   1,
+				horizontal: 0,
+			},
+			args: args{direction: Up()},
+			want: true,
+		},
+		{
+			name: "not opposite",
+			fields: fields{
+				vertical:   1,
+				horizontal: 0,
+			},
+			args: args{direction: Right()},
+			want: false,
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.want, NewDirection(tt.args.deltaRow, tt.args.deltaCol))
+			d := Direction{
+				vertical:   tt.fields.vertical,
+				horizontal: tt.fields.horizontal,
+			}
+			assert.Equal(t, tt.want, d.IsOpposite(tt.args.direction))
 		})
 	}
 }

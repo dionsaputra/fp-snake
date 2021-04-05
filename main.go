@@ -9,7 +9,7 @@ import (
 
 func main() {
 	dimension := logics.NewDimension(30, 15)
-	right := logics.NewDirection(1, 0)
+	right := logics.Right()
 
 	s := logics.NewSnake(logics.NewSegment(5, 5)).
 		Grow(right, dimension).

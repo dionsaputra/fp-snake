@@ -45,7 +45,7 @@ func TestSnake_Move(t *testing.T) {
 		{
 			name:   "just head",
 			fields: fields{head: NewSegment(10, 20)},
-			args:   args{NewDirection(-1, 0), NewDimension(20, 30)},
+			args:   args{Up(), NewDimension(20, 30)},
 			want:   NewSnake(NewSegment(9, 20)),
 		},
 		{
@@ -54,7 +54,7 @@ func TestSnake_Move(t *testing.T) {
 				head: NewSegment(10, 20),
 				tail: NewTail(NewSegment(11, 20)),
 			},
-			args: args{NewDirection(-1, 0), NewDimension(20, 30)},
+			args: args{Up(), NewDimension(20, 30)},
 			want: Snake{
 				head: NewSegment(9, 20),
 				tail: NewTail(NewSegment(10, 20)),
@@ -69,7 +69,7 @@ func TestSnake_Move(t *testing.T) {
 					NewSegment(12, 20),
 				),
 			},
-			args: args{NewDirection(-1, 0), NewDimension(20, 30)},
+			args: args{Up(), NewDimension(20, 30)},
 			want: Snake{
 				head: NewSegment(9, 20),
 				tail: NewTail(
@@ -108,7 +108,7 @@ func TestSnake_Grow(t *testing.T) {
 		{
 			name:   "just head",
 			fields: fields{head: NewSegment(10, 20)},
-			args:   args{NewDirection(-1, 0), NewDimension(20, 30)},
+			args:   args{Up(), NewDimension(20, 30)},
 			want: Snake{
 				head: NewSegment(9, 20),
 				tail: NewTail(NewSegment(10, 20)),
@@ -120,7 +120,7 @@ func TestSnake_Grow(t *testing.T) {
 				head: NewSegment(10, 20),
 				tail: NewTail(NewSegment(11, 20)),
 			},
-			args: args{NewDirection(-1, 0), NewDimension(20, 30)},
+			args: args{Up(), NewDimension(20, 30)},
 			want: Snake{
 				head: NewSegment(9, 20),
 				tail: NewTail(
@@ -138,7 +138,7 @@ func TestSnake_Grow(t *testing.T) {
 					NewSegment(12, 20),
 				),
 			},
-			args: args{NewDirection(-1, 0), NewDimension(20, 30)},
+			args: args{Up(), NewDimension(20, 30)},
 			want: Snake{
 				head: NewSegment(9, 20),
 				tail: NewTail(

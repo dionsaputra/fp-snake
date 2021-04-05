@@ -1,10 +1,26 @@
 package logics
 
 type Direction struct {
-	deltaRow int
-	deltaCol int
+	vertical   int
+	horizontal int
 }
 
-func NewDirection(deltaRow, deltaCol int) Direction {
-	return Direction{deltaRow, deltaCol}
+func Left() Direction {
+	return Direction{0, -1}
+}
+
+func Right() Direction {
+	return Direction{0, 1}
+}
+
+func Up() Direction {
+	return Direction{-1, 0}
+}
+
+func Down() Direction {
+	return Direction{1, 0}
+}
+
+func (d Direction) IsOpposite(direction Direction) bool {
+	return (d.vertical*direction.vertical)+(d.horizontal*direction.horizontal) == -1
 }
