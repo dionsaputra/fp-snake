@@ -6,28 +6,6 @@ import (
 	"testing"
 )
 
-func TestNewSnake(t *testing.T) {
-	type args struct {
-		head Head
-	}
-	tests := []struct {
-		name string
-		args args
-		want Snake
-	}{
-		{
-			name: "new snake",
-			args: args{Head{Segment{10, 20}, math.Left()}},
-			want: Snake{head: Head{Segment{10, 20}, math.Left()}},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			assert.Equal(t, tt.want, NewSnake(tt.args.head))
-		})
-	}
-}
-
 func TestSnake_Move(t *testing.T) {
 	type fields struct {
 		head Head
@@ -43,41 +21,41 @@ func TestSnake_Move(t *testing.T) {
 		want   Snake
 	}{
 		{
-			name:   "just head",
+			name:   "just Head",
 			fields: fields{head: Head{Segment{10, 20}, math.Up()}},
 			args:   args{math.Dimension{Height: 20, Width: 30}},
-			want:   NewSnake(Head{Segment{9, 20}, math.Up()}),
+			want:   Snake{Head: Head{Segment{9, 20}, math.Up()}},
 		},
 		{
-			name: "one tail",
+			name: "one Tail",
 			fields: fields{
 				head: Head{Segment{10, 20}, math.Up()},
 				tail: Tail{[]Segment{{11, 20}}},
 			},
 			args: args{math.Dimension{Height: 20, Width: 30}},
 			want: Snake{
-				head: Head{Segment{9, 20}, math.Up()},
-				tail: Tail{[]Segment{{10, 20}}},
+				Head: Head{Segment{9, 20}, math.Up()},
+				Tail: Tail{[]Segment{{10, 20}}},
 			},
 		},
 		{
-			name: "two tail",
+			name: "two Tail",
 			fields: fields{
 				head: Head{Segment{10, 20}, math.Up()},
 				tail: Tail{[]Segment{{11, 20}, {12, 20}}},
 			},
 			args: args{math.Dimension{Height: 20, Width: 30}},
 			want: Snake{
-				head: Head{Segment{9, 20}, math.Up()},
-				tail: Tail{[]Segment{{10, 20}, {11, 20}}},
+				Head: Head{Segment{9, 20}, math.Up()},
+				Tail: Tail{[]Segment{{10, 20}, {11, 20}}},
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := Snake{
-				head: tt.fields.head,
-				tail: tt.fields.tail,
+				Head: tt.fields.head,
+				Tail: tt.fields.tail,
 			}
 			assert.Equal(t, tt.want, s.Move(tt.args.dimension))
 		})
@@ -99,44 +77,44 @@ func TestSnake_Grow(t *testing.T) {
 		want   Snake
 	}{
 		{
-			name:   "just head",
+			name:   "just Head",
 			fields: fields{head: Head{Segment{10, 20}, math.Up()}},
 			args:   args{math.Dimension{Height: 20, Width: 30}},
 			want: Snake{
-				head: Head{Segment{9, 20}, math.Up()},
-				tail: Tail{[]Segment{{10, 20}}},
+				Head: Head{Segment{9, 20}, math.Up()},
+				Tail: Tail{[]Segment{{10, 20}}},
 			},
 		},
 		{
-			name: "one tail",
+			name: "one Tail",
 			fields: fields{
 				head: Head{Segment{10, 20}, math.Up()},
 				tail: Tail{[]Segment{{11, 20}}},
 			},
 			args: args{math.Dimension{Height: 20, Width: 30}},
 			want: Snake{
-				head: Head{Segment{9, 20}, math.Up()},
-				tail: Tail{[]Segment{{10, 20}, {11, 20}}},
+				Head: Head{Segment{9, 20}, math.Up()},
+				Tail: Tail{[]Segment{{10, 20}, {11, 20}}},
 			},
 		},
 		{
-			name: "two tail",
+			name: "two Tail",
 			fields: fields{
 				head: Head{Segment{10, 20}, math.Up()},
 				tail: Tail{[]Segment{{11, 20}, {12, 20}}},
 			},
 			args: args{math.Dimension{Height: 20, Width: 30}},
 			want: Snake{
-				head: Head{Segment{9, 20}, math.Up()},
-				tail: Tail{[]Segment{{10, 20}, {11, 20}, {12, 20}}},
+				Head: Head{Segment{9, 20}, math.Up()},
+				Tail: Tail{[]Segment{{10, 20}, {11, 20}, {12, 20}}},
 			},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := Snake{
-				head: tt.fields.head,
-				tail: tt.fields.tail,
+				Head: tt.fields.head,
+				Tail: tt.fields.tail,
 			}
 			assert.Equal(t, tt.want, s.Grow(tt.args.dimension))
 		})
@@ -158,7 +136,7 @@ func TestSnake_Contains(t *testing.T) {
 		want   bool
 	}{
 		{
-			name: "equals with head",
+			name: "equals with Head",
 			fields: fields{
 				head: Head{Segment{10, 20}, math.Up()},
 				tail: Tail{[]Segment{{11, 20}}},
@@ -167,7 +145,7 @@ func TestSnake_Contains(t *testing.T) {
 			want: true,
 		},
 		{
-			name: "contains in tail",
+			name: "contains in Tail",
 			fields: fields{
 				head: Head{Segment{10, 20}, math.Up()},
 				tail: Tail{[]Segment{{11, 20}}},
@@ -188,8 +166,8 @@ func TestSnake_Contains(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			s := Snake{
-				head: tt.fields.head,
-				tail: tt.fields.tail,
+				Head: tt.fields.head,
+				Tail: tt.fields.tail,
 			}
 			assert.Equal(t, tt.want, s.Contains(tt.args.segment))
 		})
@@ -252,7 +230,7 @@ func TestNewHead(t *testing.T) {
 		want Head
 	}{
 		{
-			name: "new head",
+			name: "new Head",
 			args: args{
 				segment:   Segment{10, 20},
 				direction: math.Left(),
@@ -384,13 +362,13 @@ func TestTail_AddFirst(t1 *testing.T) {
 		want   Tail
 	}{
 		{
-			name:   "empty tail",
+			name:   "empty Tail",
 			fields: fields{},
 			args:   args{Segment{10, 20}},
 			want:   Tail{[]Segment{{10, 20}}},
 		},
 		{
-			name:   "non-empty tail",
+			name:   "non-empty Tail",
 			fields: fields{[]Segment{{10, 20}}},
 			args:   args{Segment{20, 30}},
 			want:   Tail{[]Segment{{20, 30}, {10, 20}}},
@@ -416,12 +394,12 @@ func TestTail_DropLast(t1 *testing.T) {
 		want   Tail
 	}{
 		{
-			name:   "empty tail",
+			name:   "empty Tail",
 			fields: fields{},
 			want:   Tail{},
 		},
 		{
-			name:   "not-empty tail",
+			name:   "not-empty Tail",
 			fields: fields{[]Segment{{10, 20}, {20, 30}}},
 			want:   Tail{[]Segment{{10, 20}}},
 		},
@@ -446,12 +424,12 @@ func TestTail_IsEmpty(t1 *testing.T) {
 		want   bool
 	}{
 		{
-			name:   "empty tail",
+			name:   "empty Tail",
 			fields: fields{},
 			want:   true,
 		},
 		{
-			name:   "not-empty tail",
+			name:   "not-empty Tail",
 			fields: fields{[]Segment{{10, 20}}},
 			want:   false,
 		},

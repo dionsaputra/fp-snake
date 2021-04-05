@@ -6,8 +6,8 @@ import (
 
 type (
 	Snake struct {
-		head Head
-		tail Tail
+		Head Head
+		Tail Tail
 	}
 	Segment struct {
 		Row int
@@ -23,25 +23,25 @@ type (
 )
 
 func NewSnake(head Head) Snake {
-	return Snake{head: head}
+	return Snake{Head: head}
 }
 
 func (s Snake) Move(dimension math.Dimension) Snake {
-	if !s.tail.IsEmpty() {
-		s.tail = s.tail.AddFirst(s.head.Segment).DropLast()
+	if !s.Tail.IsEmpty() {
+		s.Tail = s.Tail.AddFirst(s.Head.Segment).DropLast()
 	}
-	s.head = s.head.Move(dimension)
+	s.Head = s.Head.Move(dimension)
 	return s
 }
 
 func (s Snake) Grow(dimension math.Dimension) Snake {
-	s.tail = s.tail.AddFirst(s.head.Segment)
-	s.head = s.head.Move(dimension)
+	s.Tail = s.Tail.AddFirst(s.Head.Segment)
+	s.Head = s.Head.Move(dimension)
 	return s
 }
 
 func (s Snake) Contains(segment Segment) bool {
-	return s.head.Segment == segment || s.tail.Contains(segment)
+	return s.Head.Segment == segment || s.Tail.Contains(segment)
 }
 
 func (s Segment) Move(direction math.Direction, dimension math.Dimension) Segment {

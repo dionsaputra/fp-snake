@@ -12,10 +12,13 @@ func main() {
 	dimension := math.Dimension{Height: 15, Width: 30}
 	right := math.Right()
 
-	s := snake.NewSnake(snake.Head{
-		Segment:   snake.Segment{Row: 5, Col: 5},
-		Direction: right,
-	}).Grow(dimension).Grow(dimension)
+	s := snake.Snake{
+		Head: snake.Head{
+			Segment:   snake.Segment{Row: 5, Col: 5},
+			Direction: right,
+		},
+	}
+	s = s.Grow(dimension).Grow(dimension)
 
 	width := 30
 	height := 15
