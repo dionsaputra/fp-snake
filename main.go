@@ -8,12 +8,12 @@ import (
 )
 
 func main() {
-	dimension := logics.NewDimension(30, 15)
+	dimension := logics.NewDimension(15, 30)
 	right := logics.Right()
 
-	s := logics.NewSnake(logics.NewSegment(5, 5)).
-		Grow(right, dimension).
-		Grow(right, dimension)
+	s := logics.NewSnake(logics.NewHead(logics.NewSegment(5, 5), right)).
+		Grow(dimension).
+		Grow(dimension)
 
 	width := 30
 	height := 15
@@ -24,7 +24,7 @@ func main() {
 
 		for i := 0; i < height; i++ {
 			for j := 0; j < width; j++ {
-				contains := s.Contains(logics.NewSegment(j, i))
+				contains := s.Contains(logics.NewSegment(i, j))
 				if contains {
 					print("#")
 				} else {
@@ -34,7 +34,7 @@ func main() {
 			}
 			print("\n")
 		}
-		s = s.Move(right, dimension)
+		s = s.Move(dimension)
 		time.Sleep(300 * 1000 * 1000)
 	}
 }

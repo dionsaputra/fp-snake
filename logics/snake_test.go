@@ -7,7 +7,7 @@ import (
 
 func TestNewSnake(t *testing.T) {
 	type args struct {
-		head Segment
+		head Head
 	}
 	tests := []struct {
 		name string
@@ -16,8 +16,8 @@ func TestNewSnake(t *testing.T) {
 	}{
 		{
 			name: "new snake",
-			args: args{NewSegment(10, 20)},
-			want: Snake{head: NewSegment(10, 20)},
+			args: args{NewHead(NewSegment(10, 20), Left())},
+			want: Snake{head: NewHead(NewSegment(10, 20), Left())},
 		},
 	}
 	for _, tt := range tests {
@@ -29,11 +29,10 @@ func TestNewSnake(t *testing.T) {
 
 func TestSnake_Move(t *testing.T) {
 	type fields struct {
-		head Segment
+		head Head
 		tail Tail
 	}
 	type args struct {
-		direction Direction
 		dimension Dimension
 	}
 	tests := []struct {
@@ -44,34 +43,34 @@ func TestSnake_Move(t *testing.T) {
 	}{
 		{
 			name:   "just head",
-			fields: fields{head: NewSegment(10, 20)},
-			args:   args{Up(), NewDimension(20, 30)},
-			want:   NewSnake(NewSegment(9, 20)),
+			fields: fields{head: NewHead(NewSegment(10, 20), Up())},
+			args:   args{NewDimension(20, 30)},
+			want:   NewSnake(NewHead(NewSegment(9, 20), Up())),
 		},
 		{
 			name: "one tail",
 			fields: fields{
-				head: NewSegment(10, 20),
+				head: NewHead(NewSegment(10, 20), Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
-			args: args{Up(), NewDimension(20, 30)},
+			args: args{NewDimension(20, 30)},
 			want: Snake{
-				head: NewSegment(9, 20),
+				head: NewHead(NewSegment(9, 20), Up()),
 				tail: NewTail(NewSegment(10, 20)),
 			},
 		},
 		{
 			name: "two tail",
 			fields: fields{
-				head: NewSegment(10, 20),
+				head: NewHead(NewSegment(10, 20), Up()),
 				tail: NewTail(
 					NewSegment(11, 20),
 					NewSegment(12, 20),
 				),
 			},
-			args: args{Up(), NewDimension(20, 30)},
+			args: args{NewDimension(20, 30)},
 			want: Snake{
-				head: NewSegment(9, 20),
+				head: NewHead(NewSegment(9, 20), Up()),
 				tail: NewTail(
 					NewSegment(10, 20),
 					NewSegment(11, 20),
@@ -85,18 +84,17 @@ func TestSnake_Move(t *testing.T) {
 				head: tt.fields.head,
 				tail: tt.fields.tail,
 			}
-			assert.Equal(t, tt.want, s.Move(tt.args.direction, tt.args.dimension))
+			assert.Equal(t, tt.want, s.Move(tt.args.dimension))
 		})
 	}
 }
 
 func TestSnake_Grow(t *testing.T) {
 	type fields struct {
-		head Segment
+		head Head
 		tail Tail
 	}
 	type args struct {
-		direction Direction
 		dimension Dimension
 	}
 	tests := []struct {
@@ -107,22 +105,22 @@ func TestSnake_Grow(t *testing.T) {
 	}{
 		{
 			name:   "just head",
-			fields: fields{head: NewSegment(10, 20)},
-			args:   args{Up(), NewDimension(20, 30)},
+			fields: fields{head: NewHead(NewSegment(10, 20), Up())},
+			args:   args{NewDimension(20, 30)},
 			want: Snake{
-				head: NewSegment(9, 20),
+				head: NewHead(NewSegment(9, 20), Up()),
 				tail: NewTail(NewSegment(10, 20)),
 			},
 		},
 		{
 			name: "one tail",
 			fields: fields{
-				head: NewSegment(10, 20),
+				head: NewHead(NewSegment(10, 20), Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
-			args: args{Up(), NewDimension(20, 30)},
+			args: args{NewDimension(20, 30)},
 			want: Snake{
-				head: NewSegment(9, 20),
+				head: NewHead(NewSegment(9, 20), Up()),
 				tail: NewTail(
 					NewSegment(10, 20),
 					NewSegment(11, 20),
@@ -132,15 +130,15 @@ func TestSnake_Grow(t *testing.T) {
 		{
 			name: "two tail",
 			fields: fields{
-				head: NewSegment(10, 20),
+				head: NewHead(NewSegment(10, 20), Up()),
 				tail: NewTail(
 					NewSegment(11, 20),
 					NewSegment(12, 20),
 				),
 			},
-			args: args{Up(), NewDimension(20, 30)},
+			args: args{NewDimension(20, 30)},
 			want: Snake{
-				head: NewSegment(9, 20),
+				head: NewHead(NewSegment(9, 20), Up()),
 				tail: NewTail(
 					NewSegment(10, 20),
 					NewSegment(11, 20),
@@ -155,14 +153,14 @@ func TestSnake_Grow(t *testing.T) {
 				head: tt.fields.head,
 				tail: tt.fields.tail,
 			}
-			assert.Equal(t, tt.want, s.Grow(tt.args.direction, tt.args.dimension))
+			assert.Equal(t, tt.want, s.Grow(tt.args.dimension))
 		})
 	}
 }
 
 func TestSnake_Contains(t *testing.T) {
 	type fields struct {
-		head Segment
+		head Head
 		tail Tail
 	}
 	type args struct {
@@ -177,7 +175,7 @@ func TestSnake_Contains(t *testing.T) {
 		{
 			name: "equals with head",
 			fields: fields{
-				head: NewSegment(10, 20),
+				head: NewHead(NewSegment(10, 20), Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
 			args: args{NewSegment(10, 20)},
@@ -186,7 +184,7 @@ func TestSnake_Contains(t *testing.T) {
 		{
 			name: "contains in tail",
 			fields: fields{
-				head: NewSegment(10, 20),
+				head: NewHead(NewSegment(10, 20), Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
 			args: args{NewSegment(11, 20)},
@@ -195,7 +193,7 @@ func TestSnake_Contains(t *testing.T) {
 		{
 			name: "not contains",
 			fields: fields{
-				head: NewSegment(10, 20),
+				head: NewHead(NewSegment(10, 20), Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
 			args: args{NewSegment(12, 20)},
