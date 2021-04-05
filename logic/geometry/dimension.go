@@ -1,8 +1,8 @@
-package logics
+package geometry
 
 type Dimension struct {
-	height int
-	width int
+	Height int
+	Width  int
 }
 
 func NewDimension(height, width int) Dimension {

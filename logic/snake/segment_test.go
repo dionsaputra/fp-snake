@@ -1,6 +1,7 @@
-package logics
+package snake
 
 import (
+	"github.com/dionsaputra/fp-snake/logic/geometry"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -34,8 +35,8 @@ func TestSegment_Move(t *testing.T) {
 		col int
 	}
 	type args struct {
-		direction Direction
-		dimension Dimension
+		direction geometry.Direction
+		dimension geometry.Dimension
 	}
 	tests := []struct {
 		name   string
@@ -46,19 +47,19 @@ func TestSegment_Move(t *testing.T) {
 		{
 			name:   "in dimension range",
 			fields: fields{10, 12},
-			args:   args{Left(), NewDimension(20, 30)},
+			args:   args{geometry.Left(), geometry.NewDimension(20, 30)},
 			want:   NewSegment(10, 11),
 		},
 		{
 			name:   "out of height dimension",
 			fields: fields{19, 12},
-			args:   args{Down(), NewDimension(20, 30)},
+			args:   args{geometry.Down(), geometry.NewDimension(20, 30)},
 			want:   NewSegment(0, 12),
 		},
 		{
 			name:   "out of width dimension",
 			fields: fields{19, 29},
-			args:   args{Right(), NewDimension(20, 30)},
+			args:   args{geometry.Right(), geometry.NewDimension(20, 30)},
 			want:   NewSegment(19, 0),
 		},
 	}

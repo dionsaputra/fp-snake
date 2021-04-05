@@ -1,15 +1,15 @@
-package logics
+package snake
 
 import (
+	"github.com/dionsaputra/fp-snake/logic/geometry"
 	"github.com/stretchr/testify/assert"
-	"reflect"
 	"testing"
 )
 
 func TestNewHead(t *testing.T) {
 	type args struct {
 		segment   Segment
-		direction Direction
+		direction geometry.Direction
 	}
 	tests := []struct {
 		name string
@@ -20,11 +20,11 @@ func TestNewHead(t *testing.T) {
 			name: "new head",
 			args: args{
 				segment:   NewSegment(10, 20),
-				direction: Left(),
+				direction: geometry.Left(),
 			},
 			want: Head{
 				segment:   NewSegment(10, 20),
-				direction: Left(),
+				direction: geometry.Left(),
 			},
 		},
 	}
@@ -38,10 +38,10 @@ func TestNewHead(t *testing.T) {
 func TestHead_SetDirection(t *testing.T) {
 	type fields struct {
 		segment   Segment
-		direction Direction
+		direction geometry.Direction
 	}
 	type args struct {
-		direction Direction
+		direction geometry.Direction
 	}
 	tests := []struct {
 		name   string
@@ -51,15 +51,15 @@ func TestHead_SetDirection(t *testing.T) {
 	}{
 		{
 			name:   "set to opposite direction",
-			fields: fields{segment: NewSegment(1, 2), direction: Left()},
-			args:   args{direction: Right()},
-			want:   NewHead(NewSegment(1, 2), Left()),
+			fields: fields{segment: NewSegment(1, 2), direction: geometry.Left()},
+			args:   args{direction: geometry.Right()},
+			want:   NewHead(NewSegment(1, 2), geometry.Left()),
 		},
 		{
 			name:   "set to non-opposite direction",
-			fields: fields{segment: NewSegment(1, 2), direction: Left()},
-			args:   args{direction: Up()},
-			want:   NewHead(NewSegment(1, 2), Up()),
+			fields: fields{segment: NewSegment(1, 2), direction: geometry.Left()},
+			args:   args{direction: geometry.Up()},
+			want:   NewHead(NewSegment(1, 2), geometry.Up()),
 		},
 	}
 	for _, tt := range tests {
@@ -76,39 +76,10 @@ func TestHead_SetDirection(t *testing.T) {
 func TestHead_Move(t *testing.T) {
 	type fields struct {
 		segment   Segment
-		direction Direction
+		direction geometry.Direction
 	}
 	type args struct {
-		dimension Dimension
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		args   args
-		want   Head
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			h := Head{
-				segment:   tt.fields.segment,
-				direction: tt.fields.direction,
-			}
-			if got := h.Move(tt.args.dimension); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Move() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func TestHead_Move1(t *testing.T) {
-	type fields struct {
-		segment   Segment
-		direction Direction
-	}
-	type args struct {
-		dimension Dimension
+		dimension geometry.Dimension
 	}
 	tests := []struct {
 		name   string
@@ -120,10 +91,10 @@ func TestHead_Move1(t *testing.T) {
 			name: "move",
 			fields: fields{
 				segment:   NewSegment(1, 2),
-				direction: Left(),
+				direction: geometry.Left(),
 			},
-			args: args{dimension: NewDimension(10, 10)},
-			want: NewHead(NewSegment(1, 1), Left()),
+			args: args{dimension: geometry.NewDimension(10, 10)},
+			want: NewHead(NewSegment(1, 1), geometry.Left()),
 		},
 	}
 	for _, tt := range tests {

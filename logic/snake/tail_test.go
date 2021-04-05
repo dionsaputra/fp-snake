@@ -1,4 +1,4 @@
-package logics
+package snake
 
 import (
 	"github.com/stretchr/testify/assert"

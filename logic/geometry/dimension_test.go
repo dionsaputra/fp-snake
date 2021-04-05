@@ -1,4 +1,4 @@
-package logics
+package geometry
 
 import (
 	"github.com/stretchr/testify/assert"

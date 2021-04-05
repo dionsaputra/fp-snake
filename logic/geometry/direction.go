@@ -1,8 +1,8 @@
-package logics
+package geometry
 
 type Direction struct {
-	vertical   int
-	horizontal int
+	Vertical   int
+	Horizontal int
 }
 
 func Left() Direction {
@@ -22,5 +22,5 @@ func Down() Direction {
 }
 
 func (d Direction) IsOpposite(direction Direction) bool {
-	return (d.vertical*direction.vertical)+(d.horizontal*direction.horizontal) == -1
+	return (d.Vertical*direction.Vertical)+(d.Horizontal*direction.Horizontal) == -1
 }

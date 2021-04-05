@@ -1,6 +1,7 @@
-package logics
+package snake
 
 import (
+	"github.com/dionsaputra/fp-snake/logic/geometry"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -16,8 +17,8 @@ func TestNewSnake(t *testing.T) {
 	}{
 		{
 			name: "new snake",
-			args: args{NewHead(NewSegment(10, 20), Left())},
-			want: Snake{head: NewHead(NewSegment(10, 20), Left())},
+			args: args{NewHead(NewSegment(10, 20), geometry.Left())},
+			want: Snake{head: NewHead(NewSegment(10, 20), geometry.Left())},
 		},
 	}
 	for _, tt := range tests {
@@ -33,7 +34,7 @@ func TestSnake_Move(t *testing.T) {
 		tail Tail
 	}
 	type args struct {
-		dimension Dimension
+		dimension geometry.Dimension
 	}
 	tests := []struct {
 		name   string
@@ -43,34 +44,34 @@ func TestSnake_Move(t *testing.T) {
 	}{
 		{
 			name:   "just head",
-			fields: fields{head: NewHead(NewSegment(10, 20), Up())},
-			args:   args{NewDimension(20, 30)},
-			want:   NewSnake(NewHead(NewSegment(9, 20), Up())),
+			fields: fields{head: NewHead(NewSegment(10, 20), geometry.Up())},
+			args:   args{geometry.NewDimension(20, 30)},
+			want:   NewSnake(NewHead(NewSegment(9, 20), geometry.Up())),
 		},
 		{
 			name: "one tail",
 			fields: fields{
-				head: NewHead(NewSegment(10, 20), Up()),
+				head: NewHead(NewSegment(10, 20), geometry.Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
-			args: args{NewDimension(20, 30)},
+			args: args{geometry.NewDimension(20, 30)},
 			want: Snake{
-				head: NewHead(NewSegment(9, 20), Up()),
+				head: NewHead(NewSegment(9, 20), geometry.Up()),
 				tail: NewTail(NewSegment(10, 20)),
 			},
 		},
 		{
 			name: "two tail",
 			fields: fields{
-				head: NewHead(NewSegment(10, 20), Up()),
+				head: NewHead(NewSegment(10, 20), geometry.Up()),
 				tail: NewTail(
 					NewSegment(11, 20),
 					NewSegment(12, 20),
 				),
 			},
-			args: args{NewDimension(20, 30)},
+			args: args{geometry.NewDimension(20, 30)},
 			want: Snake{
-				head: NewHead(NewSegment(9, 20), Up()),
+				head: NewHead(NewSegment(9, 20), geometry.Up()),
 				tail: NewTail(
 					NewSegment(10, 20),
 					NewSegment(11, 20),
@@ -95,7 +96,7 @@ func TestSnake_Grow(t *testing.T) {
 		tail Tail
 	}
 	type args struct {
-		dimension Dimension
+		dimension geometry.Dimension
 	}
 	tests := []struct {
 		name   string
@@ -105,22 +106,22 @@ func TestSnake_Grow(t *testing.T) {
 	}{
 		{
 			name:   "just head",
-			fields: fields{head: NewHead(NewSegment(10, 20), Up())},
-			args:   args{NewDimension(20, 30)},
+			fields: fields{head: NewHead(NewSegment(10, 20), geometry.Up())},
+			args:   args{geometry.NewDimension(20, 30)},
 			want: Snake{
-				head: NewHead(NewSegment(9, 20), Up()),
+				head: NewHead(NewSegment(9, 20), geometry.Up()),
 				tail: NewTail(NewSegment(10, 20)),
 			},
 		},
 		{
 			name: "one tail",
 			fields: fields{
-				head: NewHead(NewSegment(10, 20), Up()),
+				head: NewHead(NewSegment(10, 20), geometry.Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
-			args: args{NewDimension(20, 30)},
+			args: args{geometry.NewDimension(20, 30)},
 			want: Snake{
-				head: NewHead(NewSegment(9, 20), Up()),
+				head: NewHead(NewSegment(9, 20), geometry.Up()),
 				tail: NewTail(
 					NewSegment(10, 20),
 					NewSegment(11, 20),
@@ -130,15 +131,15 @@ func TestSnake_Grow(t *testing.T) {
 		{
 			name: "two tail",
 			fields: fields{
-				head: NewHead(NewSegment(10, 20), Up()),
+				head: NewHead(NewSegment(10, 20), geometry.Up()),
 				tail: NewTail(
 					NewSegment(11, 20),
 					NewSegment(12, 20),
 				),
 			},
-			args: args{NewDimension(20, 30)},
+			args: args{geometry.NewDimension(20, 30)},
 			want: Snake{
-				head: NewHead(NewSegment(9, 20), Up()),
+				head: NewHead(NewSegment(9, 20), geometry.Up()),
 				tail: NewTail(
 					NewSegment(10, 20),
 					NewSegment(11, 20),
@@ -175,7 +176,7 @@ func TestSnake_Contains(t *testing.T) {
 		{
 			name: "equals with head",
 			fields: fields{
-				head: NewHead(NewSegment(10, 20), Up()),
+				head: NewHead(NewSegment(10, 20), geometry.Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
 			args: args{NewSegment(10, 20)},
@@ -184,7 +185,7 @@ func TestSnake_Contains(t *testing.T) {
 		{
 			name: "contains in tail",
 			fields: fields{
-				head: NewHead(NewSegment(10, 20), Up()),
+				head: NewHead(NewSegment(10, 20), geometry.Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
 			args: args{NewSegment(11, 20)},
@@ -193,7 +194,7 @@ func TestSnake_Contains(t *testing.T) {
 		{
 			name: "not contains",
 			fields: fields{
-				head: NewHead(NewSegment(10, 20), Up()),
+				head: NewHead(NewSegment(10, 20), geometry.Up()),
 				tail: NewTail(NewSegment(11, 20)),
 			},
 			args: args{NewSegment(12, 20)},

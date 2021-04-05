@@ -1,4 +1,4 @@
-package logics
+package snake
 
 type Tail struct {
 	segments []Segment

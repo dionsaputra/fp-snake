@@ -1,4 +1,4 @@
-package logics
+package geometry
 
 import (
 	"github.com/stretchr/testify/assert"
@@ -41,8 +41,8 @@ func TestDirection_IsOpposite(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			d := Direction{
-				vertical:   tt.fields.vertical,
-				horizontal: tt.fields.horizontal,
+				Vertical:   tt.fields.vertical,
+				Horizontal: tt.fields.horizontal,
 			}
 			assert.Equal(t, tt.want, d.IsOpposite(tt.args.direction))
 		})

@@ -1,4 +1,6 @@
-package logics
+package snake
+
+import "github.com/dionsaputra/fp-snake/logic/geometry"
 
 type Snake struct {
 	head Head
@@ -9,7 +11,7 @@ func NewSnake(head Head) Snake {
 	return Snake{head: head, tail: NewTail()}
 }
 
-func (s Snake) Move(dimension Dimension) Snake {
+func (s Snake) Move(dimension geometry.Dimension) Snake {
 	if !s.tail.IsEmpty() {
 		s.tail = s.tail.AddFirst(s.head.segment).DropLast()
 	}
@@ -17,7 +19,7 @@ func (s Snake) Move(dimension Dimension) Snake {
 	return s
 }
 
-func (s Snake) Grow(dimension Dimension) Snake {
+func (s Snake) Grow(dimension geometry.Dimension) Snake {
 	s.tail = s.tail.AddFirst(s.head.segment)
 	s.head = s.head.Move(dimension)
 	return s
