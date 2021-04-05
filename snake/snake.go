@@ -22,12 +22,8 @@ type (
 	}
 )
 
-func NewSnake(head Head) Snake {
-	return Snake{Head: head}
-}
-
 func (s Snake) Move(dimension math.Dimension) Snake {
-	if !s.Tail.IsEmpty() {
+	if len(s.Tail.Segments) > 0 {
 		s.Tail = s.Tail.AddFirst(s.Head.Segment).DropLast()
 	}
 	s.Head = s.Head.Move(dimension)
@@ -74,10 +70,6 @@ func (t Tail) DropLast() Tail {
 		t.Segments = t.Segments[:size-1]
 	}
 	return t
-}
-
-func (t Tail) IsEmpty() bool {
-	return len(t.Segments) == 0
 }
 
 func (t Tail) Contains(segment Segment) bool {

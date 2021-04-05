@@ -414,36 +414,6 @@ func TestTail_DropLast(t1 *testing.T) {
 	}
 }
 
-func TestTail_IsEmpty(t1 *testing.T) {
-	type fields struct {
-		segments []Segment
-	}
-	tests := []struct {
-		name   string
-		fields fields
-		want   bool
-	}{
-		{
-			name:   "empty Tail",
-			fields: fields{},
-			want:   true,
-		},
-		{
-			name:   "not-empty Tail",
-			fields: fields{[]Segment{{10, 20}}},
-			want:   false,
-		},
-	}
-	for _, tt := range tests {
-		t1.Run(tt.name, func(t1 *testing.T) {
-			t := Tail{
-				Segments: tt.fields.segments,
-			}
-			assert.Equal(t1, tt.want, t.IsEmpty())
-		})
-	}
-}
-
 func TestTail_Contains(t1 *testing.T) {
 	type fields struct {
 		segments []Segment
