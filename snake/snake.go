@@ -41,10 +41,9 @@ func (s Snake) Contains(segment Segment) bool {
 }
 
 func (s Segment) Move(direction math.Direction, dimension math.Dimension) Segment {
-	return Segment{
-		math.Mod(s.Row+direction.Vertical, dimension.Height),
-		math.Mod(s.Col+direction.Horizontal, dimension.Width),
-	}
+	s.Row = math.Mod(s.Row+direction.Vertical, dimension.Height);
+	s.Col = math.Mod(s.Col+direction.Horizontal, dimension.Width)
+	return s
 }
 
 func (h Head) SetDirection(direction math.Direction) Head {
